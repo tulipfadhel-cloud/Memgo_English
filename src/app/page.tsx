@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function Home(){return <main style={{minHeight:"100vh",display:"grid",placeItems:"center",padding:24}}><section className="card" style={{maxWidth:520,width:"100%",textAlign:"center",padding:36}}><div className="mark" style={{margin:"0 auto 16px"}}>M</div><h1>MEMGO ENGLISH</h1><p style={{color:"#687386"}}>منصة تعليم اللغة الإنجليزية المنظمة للطلاب الناطقين بالعربية.</p><Link className="btn" href="/student">دخول المنصة</Link></section></main>}
