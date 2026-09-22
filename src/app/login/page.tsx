@@ -1,0 +1,1 @@
+import {redirect} from "next/navigation";import {currentUser} from "@/lib/auth";import LoginClient from "./LoginClient";export default async function Login(){const user=await currentUser();if(user)redirect(user.role==="ADMIN"?"/admin":"/student");return <LoginClient/>}
