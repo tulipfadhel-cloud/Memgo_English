@@ -1,0 +1,2 @@
+import {redirect} from "next/navigation";import {currentUser} from "@/lib/auth";import {LoginForm} from "./LoginForm";
+export default async function Login(){const user=await currentUser();if(user)redirect(user.role==="ADMIN"?"/admin":"/student");return <main className="auth"><section className="card authCard"><div className="mark">M</div><h1>MEMGO ENGLISH</h1><p className="kicker">سجّلي الدخول إلى منصتك التعليمية</p><LoginForm/></section></main>}
