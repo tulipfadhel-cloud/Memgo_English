@@ -1,3 +1,3 @@
-import {NextRequest,NextResponse} from "next/server";
-export function middleware(req:NextRequest){const hasSession=Boolean(req.cookies.get("memgo_session")?.value);const protectedPath=req.nextUrl.pathname.startsWith("/student")||req.nextUrl.pathname.startsWith("/admin");if(protectedPath&&!hasSession)return NextResponse.redirect(new URL("/login",req.url));return NextResponse.next();}
+import {NextResponse} from "next/server";import type {NextRequest} from "next/server";
+export function middleware(request:NextRequest){const token=request.cookies.get("memgo_session")?.value;const protectedRoute=request.nextUrl.pathname.startsWith("/admin")||request.nextUrl.pathname.startsWith("/student");if(protectedRoute&&!token){return NextResponse.redirect(new URL("/login",request.url))}return NextResponse.next()}
 export const config={matcher:["/student/:path*","/admin/:path*"]};
