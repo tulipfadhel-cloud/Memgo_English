@@ -1,2 +1,1 @@
-import "./globals.css";import {Providers} from "@/components/Providers";
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="ar" dir="rtl" suppressHydrationWarning><body><Providers>{children}</Providers></body></html>}
+import "./globals.css";import {Providers} from "@/components/Providers";export const metadata={title:{default:"MEMGO ENGLISH",template:"%s · MEMGO ENGLISH"},description:"Bilingual English learning platform for Arabic-speaking students."};export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="ar" dir="rtl" suppressHydrationWarning><body><Providers>{children}</Providers></body></html>}
