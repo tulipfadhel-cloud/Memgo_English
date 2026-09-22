@@ -1,3 +1,4 @@
 "use client";
-import {useActionState} from "react";import {signIn} from "@/app/actions/auth";
-export function LoginForm(){const [state,action,pending]=useActionState(signIn,null);return <form action={action} className="list"><label>البريد الإلكتروني<input className="field" name="email" type="email" autoComplete="email" required/></label><label>كلمة المرور<input className="field" name="password" type="password" autoComplete="current-password" minLength={8} required/></label>{state?.error&&<p className="error" role="alert">{state.error}</p>}<button className="btn" disabled={pending}>{pending?"جاري تسجيل الدخول...":"تسجيل الدخول"}</button></form>}
+import {useActionState} from "react";
+import {signIn} from "@/app/actions/auth";
+export function LoginForm(){const [state,action,pending]=useActionState(signIn,null);return <form action={action} className="authForm"><label>البريد الإلكتروني<input className="field" name="email" type="email" autoComplete="email" placeholder="name@example.com" required/></label><label>كلمة المرور<input className="field" name="password" type="password" autoComplete="current-password" placeholder="••••••••" minLength={8} required/></label>{state?.error&&<p className="error" role="alert">{state.error}</p>}<button className="primaryBtn" disabled={pending}>{pending?"جاري تسجيل الدخول...":"تسجيل الدخول"}</button></form>}
