@@ -1,2 +1,2 @@
-import "./globals.css";
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="ar" dir="rtl"><body>{children}</body></html>}
+import "./globals.css";import {Providers} from "@/components/Providers";
+export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="ar" dir="rtl" suppressHydrationWarning><body><Providers>{children}</Providers></body></html>}
