@@ -1,11 +1,101 @@
-generator client { provider = "prisma-client-js" }
-datasource db { provider = "sqlite" url = env("DATABASE_URL") }
-enum Role { ADMIN STUDENT }
-enum PlanStatus { DRAFT SCHEDULED PUBLISHED }
-model User { id String @id @default(cuid()) email String @unique passwordHash String name String role Role @default(STUDENT) createdAt DateTime @default(now()) enrollments Enrollment[] notifications Notification[] completions ActivityCompletion[] }
-model Course { id String @id @default(cuid()) title String level String enrollments Enrollment[] plans DailyPlan[] createdAt DateTime @default(now()) }
-model Enrollment { id String @id @default(cuid()) userId String courseId String user User @relation(fields:[userId],references:[id],onDelete:Cascade) course Course @relation(fields:[courseId],references:[id],onDelete:Cascade) @@unique([userId,courseId]) }
-model DailyPlan { id String @id @default(cuid()) courseId String title String date DateTime status PlanStatus @default(DRAFT) publishedAt DateTime? course Course @relation(fields:[courseId],references:[id],onDelete:Cascade) activities Activity[] }
-model Activity { id String @id @default(cuid()) planId String title String type String duration Int order Int description String? instructions String? externalUrl String? plan DailyPlan @relation(fields:[planId],references:[id],onDelete:Cascade) completions ActivityCompletion[] @@index([planId,order]) }
-model ActivityCompletion { id String @id @default(cuid()) userId String activityId String completedAt DateTime @default(now()) user User @relation(fields:[userId],references:[id],onDelete:Cascade) activity Activity @relation(fields:[activityId],references:[id],onDelete:Cascade) @@unique([userId,activityId]) }
-model Notification { id String @id @default(cuid()) userId String title String message String href String? readAt DateTime? createdAt DateTime @default(now()) user User @relation(fields:[userId],references:[id],onDelete:Cascade) @@index([userId,readAt]) }
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+enum PlanStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+}
+
+model User {
+  id          String               @id @default(cuid())
+  email       String               @unique
+  passwordHash String
+  name        String
+  role        Role                 @default(STUDENT)
+  createdAt   DateTime             @default(now())
+  enrollments Enrollment[]
+  notifications Notification[]
+  completions ActivityCompletion[]
+}
+
+model Course {
+  id          String       @id @default(cuid())
+  title       String
+  level       String
+  enrollments Enrollment[]
+  plans       DailyPlan[]
+  createdAt   DateTime     @default(now())
+}
+
+model Enrollment {
+  id       String @id @default(cuid())
+  userId   String
+  courseId String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+}
+
+model DailyPlan {
+  id          String     @id @default(cuid())
+  courseId    String
+  title       String
+  date        DateTime
+  status      PlanStatus @default(DRAFT)
+  publishedAt DateTime?
+  course      Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  activities  Activity[]
+}
+
+model Activity {
+  id           String               @id @default(cuid())
+  planId       String
+  title        String
+  type         String
+  duration     Int
+  order        Int
+  description  String?
+  instructions String?
+  externalUrl  String?
+  plan         DailyPlan            @relation(fields: [planId], references: [id], onDelete: Cascade)
+  completions  ActivityCompletion[]
+
+  @@index([planId, order])
+}
+
+model ActivityCompletion {
+  id          String   @id @default(cuid())
+  userId      String
+  activityId  String
+  completedAt DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activity    Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, activityId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  href      String?
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt])
+}
